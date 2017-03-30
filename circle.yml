@@ -43,7 +43,7 @@ dependencies:
     
     # Clone WordPress Test files from GitHub
     - git clone https://github.com/birengoodco/wordpress-test.git 
-    - sudo rsync -rav wordpress-test/wordpress/ /var/www/html/wordpress/
+    - sudo rsync -rva wordpress-test/wordpress/ /var/www/html/wordpress/
     
   post:
     # Restart the Apache server
