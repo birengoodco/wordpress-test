@@ -1,0 +1,9 @@
+version: 0.0
+os: linux
+files:
+  - source: wordpress
+    destination: /var/www/html/wordpress
+hooks:
+  BeforeInstall:
+    - location: scripts/initializeEC2.sh
+
