@@ -1,8 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: wordpress
+  - source: blog
     destination: /opt/applications/blog
+  - source: corporate
+    destination: /opt/applications/corporate
 hooks:
   AfterInstall:
     - location: scripts/change_permissions.sh
