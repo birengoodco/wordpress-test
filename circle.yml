@@ -13,7 +13,7 @@ dependencies:
   pre:
     # Install PHP MySQL extension
     - sudo apt-get update
-    - sudo apt-get -y install php5 php5-gd install php5-mysql
+    - sudo apt-get -y install php5 php5-gd php5-mysql
 
     # No password is required for the MySQL user `wordpressdb`
     - mysql -e 'CREATE DATABASE wp_blog;' -u root;
