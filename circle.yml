@@ -40,12 +40,12 @@ dependencies:
     - sudo wp core config --allow-root --dbhost=127.0.0.1 --dbname=wp_corp --dbuser=wp_corp --dbpass=passw0rd --path=/var/www/html/corporate
     
     # Install WordPress
-    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://127.0.0.1/blog --title=Blog --path=/var/www/html/blog
-    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://127.0.0.1/corporate --title=Corporate --path=/var/www/html/corporate
+    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://wp-test/blog --title=Blog --path=/var/www/html/blog
+    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://wp-test/corporate --title=Corporate --path=/var/www/html/corporate
 
     # Update Site URL since it was installed to a sub-directory
-    - sudo wp option update --allow-root siteurl http://127.0.0.1/blog/ --path=/var/www/html/blog
-    - sudo wp option update --allow-root siteurl http://127.0.0.1/corporate/ --path=/var/www/html/corporate
+    - sudo wp option update --allow-root siteurl http://wp-test/blog/ --path=/var/www/html/blog
+    - sudo wp option update --allow-root siteurl http://wp-test/corporate/ --path=/var/www/html/corporate
     
     # Clone WordPress Test files from GitHub
     - git clone https://github.com/birengoodco/wordpress-test.git 
@@ -63,3 +63,5 @@ test:
     # This is just for us to see that the WP Pusher plugin was actually installed and is active
     - wp plugin list --path=/var/www/html/blog
     - wp plugin list --path=/var/www/html/corporate
+    - curl "http://wp-test/blog" | grep "Just another WordPress site"
+    - curl "http://wp-test/corporate" | grep "Just another WordPress site"
