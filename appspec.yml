@@ -2,12 +2,18 @@ version: 0.0
 os: linux
 files:
   - source: blog
-    destination: /opt/applications/blog
+    destination: /tmp/deploy/blog
   - source: corporate
-    destination: /opt/applications/corporate
+    destination: /tmp/deploy/corporate
+permissions:
+    - object: /opt/applications/
+      owner: www-data
+      group: www-data
 hooks:
+  BeforeInstall:
+    - location: scripts/beforeInstall.sh
   AfterInstall:
-    - location: scripts/change_permissions.sh
+    - location: scripts/afterInstall.sh
       timeout: 300
       runas: root
   ApplicationStart:
