@@ -16,8 +16,10 @@ dependencies:
     - sudo apt-get -y install php5-mysql
 
     # No password is required for the MySQL user `wordpressdb`
-    - mysql -e 'CREATE DATABASE wordpressdb;' -u root;
-    - mysql -e "GRANT ALL PRIVILEGES ON wordpressdb.* TO 'wordpressdb'@'localhost' IDENTIFIED BY 'passw0rd';" -u root;
+    - mysql -e 'CREATE DATABASE wp_blog;' -u root;
+    - mysql -e 'CREATE DATABASE corp_blog;' -u root;
+    - mysql -e "GRANT ALL PRIVILEGES ON wp_blog.* TO 'wp_blog'@'localhost' IDENTIFIED BY 'passw0rd';" -u root;
+    - mysql -e "GRANT ALL PRIVILEGES ON wp_corp.* TO 'wp_corp'@'localhost' IDENTIFIED BY 'passw0rd';" -u root;
     - mysql -e 'FLUSH PRIVILEGES;' -u root;
     
     # Use cURL to fetch WP-CLI
@@ -29,28 +31,35 @@ dependencies:
     # Move and alias
     - sudo mv wp-cli.phar /usr/local/bin/wp
     
-    # Download WordPress into `wordpress` directory
-    - sudo wp core download --locale=en_US --allow-root --path=/var/www/html/wordpress
+    # Download WordPress 
+    - sudo wp core download --locale=en_US --allow-root --path=/var/www/html/blog
+    - sudo wp core download --locale=en_US --allow-root --path=/var/www/html/corporate
     
     # Generate `wp-config.php` file
-    - sudo wp core config --allow-root --dbhost=127.0.0.1 --dbname=wordpressdb --dbuser=wordpressdb --dbpass=passw0rd --path=/var/www/html/wordpress
+    - sudo wp core config --allow-root --dbhost=127.0.0.1 --dbname=wp_blog --dbuser=wp_blog --dbpass=passw0rd --path=/var/www/html/blog
+    - sudo wp core config --allow-root --dbhost=127.0.0.1 --dbname=wp_corp --dbuser=wp_corp --dbpass=passw0rd --path=/var/www/html/corporate
     
     # Install WordPress
-    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=rY9D2K9^F69y --admin_email=biren@good.co --url=http://wp-test --title=WordPress --path=/var/www/html/wordpress
+    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://127.0.0.1/blog --title=Blog --path=/var/www/html/blog
+    - sudo wp core install --allow-root --admin_name=wpadmin --admin_password=passw0rd --admin_email=biren@good.co --url=http://127.0.0.1/corporate --title=Corporate --path=/var/www/html/corporate
 
     # Update Site URL since it was installed to a sub-directory
-    - sudo wp option update --allow-root siteurl http://wp-test/wordpress/ --path=/var/www/html/wordpress
+    - sudo wp option update --allow-root siteurl http://127.0.0.1/blog/ --path=/var/www/html/blog
+    - sudo wp option update --allow-root siteurl http://127.0.0.1/corporate/ --path=/var/www/html/corporate
     
     # Clone WordPress Test files from GitHub
     - git clone https://github.com/birengoodco/wordpress-test.git 
-    - sudo rsync -rva wordpress-test/wordpress/ /var/www/html/wordpress/
+    - sudo rsync -rva wordpress-test/blog/ /var/www/html/blog/
+    - sudo rsync -rva wordpress-test/corporate/ /var/www/html/corporate/
     
   post:
     # Restart the Apache server
     - sudo service apache2 restart
-    - wp plugin activate disable-comments --path=/var/www/html/wordpress
+    - wp plugin activate disable-comments --path=/var/www/html/blog
+    - wp plugin activate disable-comments --path=/var/www/html/corporate
 
 test:
   override:
     # This is just for us to see that the WP Pusher plugin was actually installed and is active
-    - wp plugin list --path=/var/www/html/wordpress
+    - wp plugin list --path=/var/www/html/blog
+    - wp plugin list --path=/var/www/html/corporate
