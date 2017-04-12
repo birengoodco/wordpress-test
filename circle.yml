@@ -17,7 +17,7 @@ dependencies:
 
     # No password is required for the MySQL user `wordpressdb`
     - mysql -e 'CREATE DATABASE wp_blog;' -u root;
-    - mysql -e 'CREATE DATABASE corp_blog;' -u root;
+    - mysql -e 'CREATE DATABASE wp_corp;' -u root;
     - mysql -e "GRANT ALL PRIVILEGES ON wp_blog.* TO 'wp_blog'@'localhost' IDENTIFIED BY 'passw0rd';" -u root;
     - mysql -e "GRANT ALL PRIVILEGES ON wp_corp.* TO 'wp_corp'@'localhost' IDENTIFIED BY 'passw0rd';" -u root;
     - mysql -e 'FLUSH PRIVILEGES;' -u root;
