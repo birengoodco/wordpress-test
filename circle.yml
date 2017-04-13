@@ -2,8 +2,8 @@ machine:
   timezone:
     America/New_York
 
-  php:
-    version: 5.5.36
+#  php:
+#    version: 5.5.36
 
   # This will be added to the `/etc/hosts` file
   hosts:
