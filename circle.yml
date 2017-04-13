@@ -65,3 +65,18 @@ test:
     - wp plugin list --path=/var/www/html/corporate
     - curl "http://wp-test/blog/" | grep "Just another WordPress site"
     - curl "http://wp-test/corporate/" | grep "Just another WordPress site"
+
+deployment:
+  staging:
+    branch: master
+    codedeploy:
+      wp-test-app:
+        application_root: /
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: biren-codedeploy-ci
+            key_pattern: wordpress-test-{SHORT_COMMIT}-{BUILD_NUM}
+        region: eu-west-1
+        deployment_group: wp-test-deployment-group
+        deployment_config: CodeDeployDefault.AllAtOnce
