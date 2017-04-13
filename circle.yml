@@ -63,5 +63,5 @@ test:
     # This is just for us to see that the WP Pusher plugin was actually installed and is active
     - wp plugin list --path=/var/www/html/blog
     - wp plugin list --path=/var/www/html/corporate
-    - curl "http://wp-test/blog" | grep "Just another WordPress site"
-    - curl "http://wp-test/corporate" | grep "Just another WordPress site"
+    - curl "http://wp-test/blog" | grep "Welcome to WordPress"
+    - curl "http://wp-test/corporate" | grep "Welcome to WordPress"
